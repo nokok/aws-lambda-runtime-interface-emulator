@@ -58,7 +58,15 @@ You can build RIE into a base image. Download the RIE from GitHub to your local 
 
 1. Create a script and save it in your project directory. The following example shows a typical script for a Node.js function. The presence of the AWS_LAMBDA_RUNTIME_API environment variable indicates the presence of the runtime API. If the runtime API is present, the script runs the runtime interface client (https://docs.aws.amazon.com/lambda/latest/dg/runtimes-images.html#runtimes-api-client). Otherwise, the script runs the runtime interface emulator. 
 
-    * `#!/bin/sh if [ -z "${AWS_LAMBDA_RUNTIME_API}" ]; then exec /usr/local/bin/aws-lambda-rie /usr/bin/npx aws-lambda-ricelseexec /usr/bin/npx aws-lambda-ricfi`  
+    * ```
+      #!/bin/sh
+      
+      if [ -z "${AWS_LAMBDA_RUNTIME_API}" ]; then 
+          exec /usr/local/bin/aws-lambda-rie /usr/bin/npx aws-lambda-ric
+      else
+          exec /usr/bin/npx aws-lambda-ric
+      fi
+      ```  
     * Download the runtime interface emulator (https://github.com/aws/aws-lambda-runtime-interface-emulator/releases/latest/download/aws-lambda-rie) from GitHub into your project directory. 
     * Install the emulator package and change ENTRYPOINT to run the new script by adding the following lines to your Dockerfile:
         ```
